@@ -35,9 +35,9 @@ Spart.prototype.check = function () {
 	if (width < 2 * this.gridSize[0] && height < 2 * this.gridSize[1]) { // If 2x2 or smaller, skip gridding :  n * (n - 1) / 2 
 		i = this.objects.length;
 		while (i--) {
-			var grob = this.objects[i],
+			var grobobject = this.objects[i].object,
 				j = i;
-			while (j--) this.onNeighbour(grob.object, this.objects[j].object);
+			while (j--) this.onNeighbour(grobobject, this.objects[j].object);
 		}
 	} else {
 		// Clear grids
