@@ -14,7 +14,7 @@ Spart.prototype.add = function (object, width, height) {
 	this.objects.push(object);
 }
 
-Spart.prototype._neighbour = function (grob, ogrid) {
+Spart.prototype._neighbours = function (grob, ogrid) {
 	var ok = ogrid.length;
 	while (ok--) this.onNeighbour(grob, ogrid[ok]);
 }
@@ -75,11 +75,11 @@ Spart.prototype.check = function () {
 					while (ok--) this.onNeighbour(grob, grid[ok]); // Check same cell
 					if (iLUB) { // If there is space to the right
 						var ogridx = this.grid[i + 1]; // Row of grids to the right of focused grid
-						if (jG0) this._neighbour(grob, ogridx[j - 1]); // Check top-right
-						this._neighbour(grob, ogridx[j]); // Check right
-						if (jLUB) this._neighbour(grob, ogridx[j + 1]); // Check bottom-right
+						if (jG0) this._neighbours(grob, ogridx[j - 1]); // Check top-right
+						this._neighbours(grob, ogridx[j]); // Check right
+						if (jLUB) this._neighbours(grob, ogridx[j + 1]); // Check bottom-right
 					}
-					if (jLUB) this._neighbour(grob, gridx[j + 1]); // If there is space to the below, check below
+					if (jLUB) this._neighbours(grob, gridx[j + 1]); // If there is space to the below, check below
 				}
 			}
 		}
