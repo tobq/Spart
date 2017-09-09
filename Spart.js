@@ -11,19 +11,19 @@ function Spart(onNeighbour) {
 Spart.prototype.add = function (object, width, height) {
 	if (this.gridSize[0] < width) this.gridSize[0] = width;
 	if (this.gridSize[1] < height) this.gridSize[1] = height;
-	this.objects.push({ object: object });
+	this.objects.push(object);
 }
 
-Spart.prototype._neighbour = function (object, ogrid) {
+Spart.prototype._neighbour = function (grob, ogrid) {
 	var ok = ogrid.length;
-	while (ok--) this.onNeighbour(object, ogrid[ok].object);
+	while (ok--) this.onNeighbour(grob, ogrid[ok]);
 }
 
 Spart.prototype.check = function () {
 	var i = this.objects.length;
 	this.bounds = [Infinity, Infinity, -Infinity, -Infinity];
 	while (i--) { // Set bounds
-		var coords = this.objects[i].object.coords;
+		var coords = this.objects[i].coords;
 		if (this.bounds[0] > coords.x) this.bounds[0] = coords.x;
 		if (this.bounds[1] > coords.y) this.bounds[1] = coords.y;
 		if (this.bounds[2] < coords.x) this.bounds[2] = coords.x;
@@ -35,9 +35,9 @@ Spart.prototype.check = function () {
 	if (width < 2 * this.gridSize[0] && height < 2 * this.gridSize[1]) { // If 2x2 or smaller, skip gridding :  n * (n - 1) / 2 
 		i = this.objects.length;
 		while (i--) {
-			var grobobject = this.objects[i].object,
+			var grob = this.objects[i],
 				j = i;
-			while (j--) this.onNeighbour(grobobject, this.objects[j].object);
+			while (j--) this.onNeighbour(grob, this.objects[j]);
 		}
 	} else {
 		// Clear grids
@@ -56,8 +56,7 @@ Spart.prototype.check = function () {
 		i = this.objects.length;
 		while (i--) {
 			var grob = this.objects[i];
-			grob.grid = this.grid[Math.floor((grob.object.coords.x - this.bounds[0]) / this.gridSize[0])][Math.floor((grob.object.coords.y - this.bounds[1]) / this.gridSize[1])];
-			grob.grid.push(grob);
+            this.grid[Math.floor((grob.coords.x - this.bounds[0]) / this.gridSize[0])][Math.floor((grob.coords.y - this.bounds[1]) / this.gridSize[1])].push(grob);
 		}
 
 		i = this.grid.length;
@@ -73,14 +72,14 @@ Spart.prototype.check = function () {
 				while (k--) {
 					grob = grid[k]; // Focused grid object
 					var ok = k;
-					while (ok--) this.onNeighbour(grob.object, grid[ok].object); // Check same cell
+					while (ok--) this.onNeighbour(grob, grid[ok]); // Check same cell
 					if (iLUB) { // If there is space to the right
 						var ogridx = this.grid[i + 1]; // Row of grids to the right of focused grid
-						if (jG0) this._neighbour(grob.object, ogridx[j - 1]); // Check top-right
-						this._neighbour(grob.object, ogridx[j]); // Check right
-						if (jLUB) this._neighbour(grob.object, ogridx[j + 1]); // Check bottom-right
+						if (jG0) this._neighbour(grob, ogridx[j - 1]); // Check top-right
+						this._neighbour(grob, ogridx[j]); // Check right
+						if (jLUB) this._neighbour(grob, ogridx[j + 1]); // Check bottom-right
 					}
-					if (jLUB) this._neighbour(grob.object, gridx[j + 1]); // If there is space to the below, check below
+					if (jLUB) this._neighbour(grob, gridx[j + 1]); // If there is space to the below, check below
 				}
 			}
 		}
