@@ -15,8 +15,8 @@ interface gridItem {
     coOrdinates coords;
 }
 interface coOrdinates {
-    int x;
-    int y;
+    float x;
+    float y;
 }
 ```
 ### Running check
