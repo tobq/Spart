@@ -4,7 +4,7 @@ Dyamic version of [Shash](https://github.com/tobq/Shash)
 
 ### Setup
 ```javascript
-var spart = new Spart(width, height, onNeighbour);
+var spart = new Spart(onNeighbour);
 ```
 "gridItem" complient objects are added to the grid.
 
