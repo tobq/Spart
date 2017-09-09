@@ -35,7 +35,7 @@ function onNeighbour(object1, object2){
 
 Usage
 
-You can include `<script src="https://raw.githubusercontent.com/tobq/Spart/master/Spart.js" async>` in a HTML file.
+You can include `<script src="https://raw.githubusercontent.com/tobq/Spart/master/Spart.min.js" async>` in a HTML file.
 
 ```javascript
 // constructor
